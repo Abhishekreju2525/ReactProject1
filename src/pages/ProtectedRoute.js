@@ -4,7 +4,9 @@ import { Navigate } from "react-router-dom";
 
 function ProtectedRoute() {
   const userContext = useContext(UserContext);
+
   console.log(userContext);
+  
   if (!userContext.user) {
     return <Navigate to="/" replace />;
   }

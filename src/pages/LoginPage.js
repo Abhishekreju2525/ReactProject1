@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import ProjectContext from "../context/ProjectContext";
 
 export default function LoginPage() {
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -8,6 +9,7 @@ export default function LoginPage() {
   let navigate = useNavigate();
 
   const userContext = useContext(UserContext);
+  const projectContext = useContext(ProjectContext)
 
   function validateUser(event) {
     event.preventDefault();
@@ -101,9 +103,12 @@ export default function LoginPage() {
               </button>
             </form>
 
-           <div>
-           <Link to="/signup" className=" text-gray-600">Not a member? Signup now!</Link>
-           </div>
+            <div>
+              <Link to="/signup" className=" text-gray-600">
+                Not a member? Signup now!
+              </Link>
+            </div>
+            <div><button onClick={()=>{projectContext.addProject()}}>Add</button></div>
           </div>
         </div>
       </div>
