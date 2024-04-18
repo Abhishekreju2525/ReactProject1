@@ -8,11 +8,13 @@ function ProtectedRoute() {
   if (!userContext.user) {
     return <Navigate to="/" replace />;
   }
-  return <div>ProtectedRoute <br />
-
-    {userContext.user.name}
-    {userContext.user.email}
-  </div>;
+  return (
+    <div>
+      ProtectedRoute <br />
+      {userContext.user.name}
+      {userContext.user.email}
+    </div>
+  );
 }
 
 export default ProtectedRoute;
