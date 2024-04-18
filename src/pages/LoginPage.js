@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [userData, setUserData] = useState({ email: "", password: "" });
@@ -101,7 +101,9 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <button onClick={()=>userContext.addUser()}>Add user</button>
+           <div>
+           <Link to="/signup" className=" text-gray-600">Not a member? Signup now!</Link>
+           </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import UserContext from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
   const [userData, setUserData] = useState({
@@ -17,8 +17,8 @@ export default function RegisterPage() {
   function registerUser(event) {
     event.preventDefault();
     console.log(userData);
-    const authState = userContext.addUser(userData);
-    console.log(authState);
+    const addState = userContext.addUser(userData);
+    console.log(addState);
 
     if (authState) {
       navigate("/home");
@@ -123,8 +123,11 @@ export default function RegisterPage() {
                 Sign up
               </button>
             </form>
-
-            <button onClick={() => userContext.addUser()}>Add user</button>
+            <div>
+              <Link to="/" className=" text-gray-600">
+                Already a member? Sign in
+              </Link>
+            </div>{" "}
           </div>
         </div>
       </div>

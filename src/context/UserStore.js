@@ -34,6 +34,7 @@ export default function UserStore({ children }) {
 
     let newData = await res.json();
     console.log("Data from api", newData);
+    return true
   }
 
   async function userApiCall() {
