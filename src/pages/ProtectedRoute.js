@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import { Navigate } from "react-router-dom";
 
-function ProtectedRoute() {
+function ProtectedRoute({children}) {
   const userContext = useContext(UserContext);
 
   console.log(userContext);
@@ -12,9 +12,7 @@ function ProtectedRoute() {
   }
   return (
     <div>
-      ProtectedRoute <br />
-      {userContext.user.name}
-      {userContext.user.email}
+      {children}
     </div>
   );
 }
