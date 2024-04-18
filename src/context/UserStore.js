@@ -27,7 +27,7 @@ export default function UserStore({ children }) {
   }
   async function addUser(formData) {
     let res = await fetch(userApiUrl, {
-      method: "POST",
+      method: "POST",  
       headers: { "content-type": "application/json" },
       body: JSON.stringify(formData),
     });

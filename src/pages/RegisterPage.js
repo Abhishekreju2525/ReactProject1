@@ -20,7 +20,7 @@ export default function RegisterPage() {
     const addState = userContext.addUser(userData);
     console.log(addState);
 
-    if (authState) {
+    if (addState) {
       navigate("/home");
     } else {
       setError("Credentials Dont match!!");
