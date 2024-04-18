@@ -4,9 +4,9 @@ import { useDispatch } from "react-redux";
 import { fetchUsers } from "../store/userSlice";
 
 export default function UserStore({ children }) {
-  const dispatch=useDispatch()
-  
-  const [user, setUser] = useState(null);
+  const dispatch = useDispatch();
+
+  const [userObj, setUserObj] = useState(null);
   const [apiUserData, setapiUserData] = useState([]);
   const userApiUrl = "https://66209a873bf790e070b0175d.mockapi.io/api/v1/user";
 
@@ -15,31 +15,34 @@ export default function UserStore({ children }) {
       (item) => item.email === email && item.password === password
     );
     if (foundUser) {
-      setUser(foundUser);
-      return true; 
+      setUserObj(foundUser);
+      return true;
     } else {
-      return false; 
+      return false;
     }
   }
   async function addUser(formData) {
     let res = await fetch(userApiUrl, {
-      method: "POST",  
+      method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(formData),
     });
     let newData = await res.json();
     console.log("Data from api", newData);
-    return true
+    return true;
   }
 
-  useEffect(async() => {
-    const recData=await dispatch(fetchUsers())
-    console.log("recdata",recData.payload );
-    setapiUserData(recData.payload)
+  useEffect(() => {
+    async function fetchUserdata() {
+      const recData = await dispatch(fetchUsers());
+      console.log("recdata", recData.payload);
+      setapiUserData(recData.payload);
+    }
+    fetchUserdata();
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser, loginUser,addUser }}>
+    <UserContext.Provider value={{ userObj, setUserObj, loginUser, addUser }}>
       {children}
     </UserContext.Provider>
   );

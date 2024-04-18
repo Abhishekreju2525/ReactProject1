@@ -1,43 +1,50 @@
-import React from 'react'
+import React, { useContext, useState } from "react";
+import UserContext from "../context/UserContext";
+import { useDispatch } from "react-redux";
+import { addNewProject, createProject } from "../store/projectSlice";
 
 function AddProject() {
+  const userContext = useContext(UserContext);
+  const userId = userContext.userObj.id;
+  const dispatch=useDispatch()
+  
+  const [formData, setFormData] = useState({"userId":userId});
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+  function handleSubmit(event) {
+    event.preventDefault();
+    console.log(formData);
+    dispatch(createProject(formData))
+  }
   return (
-    <div className='border-black border-8 rounded-md w-1/2 m-auto pt-2 font-serif bg-green-100'>
-          <h2 className='font-bold text-xl text-center mb-4'>Add New Project</h2>
-          <input
-            type='text'
-            name='name'
-            value={newProjectData.name}
-            onChange={handleInputChange}
-            placeholder='Project Name'
-            className='w-full p-2 mb-2'
-          />
-          <input
-            type='date'
-            name='startDate'
-            value={newProjectData.startDate}
-            onChange={handleInputChange}
-            placeholder='Start Date'
-            className='w-full p-2 mb-2'
-          />
-          <input
-            type='date'
-            name='endDate'
-            value={newProjectData.endDate}
-            onChange={handleInputChange}
-            placeholder='End Date'
-            className='w-full p-2 mb-2'
-          />
-          <textarea
-            name='details'
-            value={newProjectData.details}
-            onChange={handleInputChange}
-            placeholder='Project Details'
-            className='w-full p-2 mb-2'
-          />
-          <button type='button' className='bg-blue-600 text-white py-2 px-4 rounded-lg mr-2' onClick={handleAddProject}>Add Project</button>
+    <div className="w-[90%] p-8 bg-blue-200">
+      {userId}
+      <form action="" className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <div className="gap-2">
+          <label htmlFor="name">Name</label>
+          <input type="text" name="name" id="name" onChange={handleChange} required />
         </div>
-  )
+        <div className=" gap-2">
+          <label htmlFor="details">Details</label>
+          <input type="text" name="details" id="details" onChange={handleChange} required />
+        </div>
+        <div className=" gap-2">
+          <label htmlFor="startedAt">Start date</label>
+          <input type="date" name="startedAt" id="startedAt" onChange={handleChange} required />
+        </div>
+        <div className=" gap-2">
+          <label htmlFor="endingAt">End date</label>
+          <input type="date" name="endingAt" id="endingAt" onChange={handleChange} required />
+        </div>
+        <button type="submit">Add </button>
+      </form>
+    </div>
+  );
 }
 
-export default AddProject
+export default AddProject;

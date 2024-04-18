@@ -38,7 +38,7 @@ export default function RegisterPage() {
             <form className="space-y-4 md:space-y-6" onSubmit={registerUser}>
               <div>
                 <label
-                  for="name"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Name
@@ -58,7 +58,7 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label
-                  for="email"
+                  htmlFor="email"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Your email
@@ -78,7 +78,7 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label
-                  for="password"
+                  htmlFor="password"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Password
@@ -98,7 +98,7 @@ export default function RegisterPage() {
               </div>
               <div>
                 <label
-                  for="name"
+                  htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Company Name
