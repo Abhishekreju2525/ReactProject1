@@ -7,7 +7,10 @@ import { fetchProjects } from "../store/projectSlice";
 export default function UserStore({ children }) {
   const dispatch = useDispatch();
   const projectStateData = useSelector((state) => state.project.projects);
-  const [userObj, setUserObj] = useState(null);
+  const [userObj, setUserObj] = useState(() => {
+    const usersFromLS = JSON.parse(localStorage.getItem("user")) || [];
+    return usersFromLS;
+  });
   const [apiUserData, setapiUserData] = useState([]);
   const userApiUrl = "https://66209a873bf790e070b0175d.mockapi.io/api/v1/user";
 
@@ -16,15 +19,20 @@ export default function UserStore({ children }) {
       (item) => item.email === email && item.password === password
     );
     if (foundUser) {
+      localStorage.setItem("user", JSON.stringify(foundUser));
       setUserObj(foundUser);
+      
       dispatch(fetchProjects(foundUser.id));
+      
       return true;
     } else {
       return false;
     }
   }
   function logoutUser() {
+    localStorage.removeItem("user")
     setUserObj(null);
+    
     // projectStateData(null);
     console.log(userObj);
   }

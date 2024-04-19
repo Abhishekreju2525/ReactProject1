@@ -8,7 +8,7 @@ function ProtectedRoute({children}) {
 
   console.log(userContext);
   
-  if (!userContext.userObj) {
+  if (!userContext.userObj || userContext.userObj.length === 0) {
     return <Navigate to="/" replace />;
   }
   return (
