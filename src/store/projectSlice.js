@@ -3,15 +3,19 @@ import { useContext } from "react";
 import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
-const initialState = {
-  projects: [],
-  loading: false,
-  error: null,
-};
+// const initialState = {
+//   projects: [],
+//   loading: false,
+//   error: null,
+// };
 
 const projectSlice = createSlice({
   name: "project",
-  initialState,
+  initialState: {
+    projects: [],
+    loading: false,
+    error: null,
+  },
   reducers: {
     addNewProject(state, action) {
       // Assuming payload is the new project data
@@ -32,7 +36,12 @@ const projectSlice = createSlice({
       })
       .addCase(fetchProjects.fulfilled, (state, action) => {
         state.loading = false;
-        state.projects = action.payload;
+        if (action.payload === "Not found") {
+          state.projects = state.projects;
+        }
+        else{
+          state.projects=action.payload
+        }
       })
       .addCase(fetchProjects.rejected, (state, action) => {
         state.loading = false;
@@ -43,7 +52,8 @@ const projectSlice = createSlice({
       })
       .addCase(createProject.fulfilled, (state, action) => {
         state.loading = false;
-        state.projects.push(action.payload);
+        const newData = action.payload;
+        state.projects = [...state.projects, newData];
       })
       .addCase(createProject.rejected, (state, action) => {
         state.loading = false;
@@ -52,16 +62,17 @@ const projectSlice = createSlice({
       .addCase(deleteProject.fulfilled, (state, action) => {
         const projectId = action.payload;
         state.projects = state.projects.filter(
-          
           (project) => project.id !== projectId
         );
-      }).addCase(updateProject.fulfilled,(state,action)=>{
-        const updatedProject = action.payload; 
-        const index = state.projects.findIndex(project => project.id === updatedProject.id);
+      })
+      .addCase(updateProject.fulfilled, (state, action) => {
+        const updatedProject = action.payload;
+        const index = state.projects.findIndex(
+          (project) => project.id === updatedProject.id
+        );
         if (index !== -1) {
           state.projects[index] = updatedProject;
         }
-        
       });
   },
 });
@@ -113,9 +124,9 @@ export const deleteProject = createAsyncThunk(
     }
   }
 );
-export const updateProject=createAsyncThunk(
+export const updateProject = createAsyncThunk(
   "projects/update",
-  async (updatedData)=>{
+  async (updatedData) => {
     const res = await fetch(
       `https://66209a873bf790e070b0175d.mockapi.io/api/v1/project/${updatedData.id}`,
       {
@@ -130,6 +141,6 @@ export const updateProject=createAsyncThunk(
     console.log("data from api", data);
     return data;
   }
-)
+);
 export const { addNewProject, deleteProj } = projectSlice.actions;
 export default projectSlice.reducer;

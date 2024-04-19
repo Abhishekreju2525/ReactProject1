@@ -10,6 +10,7 @@ function ProjectList() {
   const projectContext = useContext(ProjectContext);
   const dispatch = useDispatch();
   const projectLs = useSelector((state) => state.project);
+  console.log("projectLS",projectLs);
   const handleDelete = (projectId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project?"
