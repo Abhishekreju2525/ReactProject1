@@ -15,7 +15,7 @@ function ProjectList() {
     );
     if (confirmDelete) {
       // Dispatch the deleteProject thunk with the projectId
-      dispatch(deleteProj(projectId))
+      dispatch(deleteProject(projectId))
     }
   };
   return (
