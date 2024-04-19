@@ -24,6 +24,10 @@ export default function UserStore({ children }) {
       return false;
     }
   }
+  function logoutUser(){
+    setUserObj(null)
+    console.log(userObj);
+  }
   async function addUser(formData) {
     let res = await fetch(userApiUrl, {
       method: "POST",
@@ -45,7 +49,7 @@ export default function UserStore({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userObj, setUserObj, loginUser, addUser }}>
+    <UserContext.Provider value={{ userObj, setUserObj, loginUser, addUser, logoutUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import UserContext from "../context/UserContext";
 import { Navigate } from "react-router-dom";
+import Header from "../components/Header";
 
 function ProtectedRoute({children}) {
   const userContext = useContext(UserContext);
@@ -12,6 +13,7 @@ function ProtectedRoute({children}) {
   }
   return (
     <div>
+      <Header></Header>
       {children}
     </div>
   );

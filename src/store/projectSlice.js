@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { useContext } from "react";
 import UserContext from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const initialState = {
   projects: [],
@@ -54,6 +55,13 @@ const projectSlice = createSlice({
           
           (project) => project.id !== projectId
         );
+      }).addCase(updateProject.fulfilled,(state,action)=>{
+        const updatedProject = action.payload; 
+        const index = state.projects.findIndex(project => project.id === updatedProject.id);
+        if (index !== -1) {
+          state.projects[index] = updatedProject;
+        }
+        
       });
   },
 });
@@ -96,17 +104,32 @@ export const deleteProject = createAsyncThunk(
         }
       );
       if (response.ok) {
-        // Return the projectId if the deletion was successful
         return projectId;
       } else {
-        // Throw an error if the deletion failed
         throw new Error("Failed to delete project");
       }
     } catch (error) {
-      // Catch any network or other errors
       throw new Error("Error deleting project: " + error.message);
     }
   }
 );
+export const updateProject=createAsyncThunk(
+  "projects/update",
+  async (updatedData)=>{
+    const res = await fetch(
+      `https://66209a873bf790e070b0175d.mockapi.io/api/v1/project/${updatedData.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedData),
+      }
+    );
+    const data = await res.json();
+    console.log("data from api", data);
+    return data;
+  }
+)
 export const { addNewProject, deleteProj } = projectSlice.actions;
 export default projectSlice.reducer;
