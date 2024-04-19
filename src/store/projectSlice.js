@@ -18,7 +18,6 @@ const projectSlice = createSlice({
   },
   reducers: {
     addNewProject(state, action) {
-      // Assuming payload is the new project data
       state.projects.push(action.payload);
     },
     deleteProj(state, data) {
