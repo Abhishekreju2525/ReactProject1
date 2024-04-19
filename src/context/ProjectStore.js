@@ -7,7 +7,7 @@ export default function ProjectStore({ children }) {
   const dispatch = useDispatch();
   const [project, setproject] = useState(null);
   const [apiprojectData, setapiprojectData] = useState([]);
-  const userContext=useContext(UserContext)
+  const userContext = useContext(UserContext);
   const projectApiUrl =
     "https://66209a873bf790e070b0175d.mockapi.io/api/v1/project";
   const projectToAdd = {
@@ -24,24 +24,39 @@ export default function ProjectStore({ children }) {
       body: JSON.stringify(projectToAdd),
     });
 
-    let newData = await res.json();
-    console.log("Data from api", newData);
-    return true;
+    if (res.ok) {
+      // If API call is successful, fetch updated project data
+      await fetchprojData();
+      return true;
+    } else {
+      // Handle error
+      console.error("Error adding project");
+      return false;
+    }
   }
 
+  async function fetchprojData() {
+    const projData = await dispatch(fetchProjects(userContext.userObj.id));
+    console.log("projdata", projData.payload);
+    setapiprojectData([...projData.payload]); // Update state immutably
+  }
+  
   useEffect(() => {
-    async function fetchprojData() {
-      const projData = await dispatch(fetchProjects(userContext.userObj.id));
-      console.log("projdata", projData.payload);
-      setapiprojectData(projData.payload);
-    }
-    if(userContext.userObj){
+    if (userContext.userObj) {
       fetchprojData();
     }
-  }, [userContext.userObj]);
+  }, []);
 
   return (
-    <ProjectContext.Provider value={{ project, setproject, addProject }}>
+    <ProjectContext.Provider
+      value={{
+        project,
+        setproject,
+        addProject,
+        apiprojectData,
+        setapiprojectData,
+      }}
+    >
       {children}
     </ProjectContext.Provider>
   );

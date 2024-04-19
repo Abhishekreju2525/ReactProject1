@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserContext from "./UserContext";
 import { useDispatch } from "react-redux";
 import { fetchUsers } from "../store/userSlice";
+import { fetchProjects } from "../store/projectSlice";
 
 export default function UserStore({ children }) {
   const dispatch = useDispatch();
@@ -11,11 +12,13 @@ export default function UserStore({ children }) {
   const userApiUrl = "https://66209a873bf790e070b0175d.mockapi.io/api/v1/user";
 
   function loginUser(email, password) {
+    
     const foundUser = apiUserData.find(
       (item) => item.email === email && item.password === password
     );
     if (foundUser) {
       setUserObj(foundUser);
+      dispatch(fetchProjects(foundUser.id))
       return true;
     } else {
       return false;

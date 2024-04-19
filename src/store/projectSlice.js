@@ -16,6 +16,11 @@ const projectSlice = createSlice({
       // Assuming payload is the new project data
       state.projects.push(action.payload);
     },
+    deleteProj(state,data){
+      const projectId = data.payload;
+      state.projects = state.projects.filter((project) => project.id !== projectId);
+      deleteProject(projectId)
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -68,5 +73,25 @@ export const createProject = createAsyncThunk(
     return data;
   }
 );
-export const { addNewProject } = projectSlice.actions;
+export const deleteProject = createAsyncThunk(
+  "projects/delete",
+  async (projectId) => {
+    try {
+      const response = await fetch(`https://66209a873bf790e070b0175d.mockapi.io//api/v1/user/1/project/${projectId}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        // Return the projectId if the deletion was successful
+        return projectId;
+      } else {
+        // Throw an error if the deletion failed
+        throw new Error("Failed to delete project");
+      }
+    } catch (error) {
+      // Catch any network or other errors
+      throw new Error("Error deleting project: " + error.message);
+    }
+  }
+);
+export const { addNewProject,deleteProj } = projectSlice.actions;
 export default projectSlice.reducer;
