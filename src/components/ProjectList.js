@@ -4,12 +4,14 @@ import ProjectContext from "../context/ProjectContext";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProj, deleteProject } from "../store/projectSlice";
 import { Link } from "react-router-dom";
+import ProjectCard from "./ProjectCard";
 
 function ProjectList() {
   const userContext = useContext(UserContext);
   const projectContext = useContext(ProjectContext);
   const dispatch = useDispatch();
   const projectLs = useSelector((state) => state.project);
+  console.log("projectLS",projectLs);
   const handleDelete = (projectId) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this project?"
@@ -21,22 +23,16 @@ function ProjectList() {
   };
 
   return (
-    <div>
+   <div className="p-8 text-center"> <hr />
+    <h2 className="my-8 text-3xl">Your projects</h2>
+   
+     <div className=" grid max-sm:grid-cols-1 max-md:grid-cols-3 max-2xl:grid-cols-4 gap-4 mt-3 text-left">
       {projectLs.projects !== "Not found" ? (
         <>
           {projectLs.projects.map((item) => {
             return (
               <>
-                {item.name}{" "}
-                <button
-                  onClick={() => {
-                    handleDelete(item.id);
-                  }}
-                >
-                  Delete
-                </button>
-                <Link to={`/edit/${item.id}`}>Edit</Link>
-                <br />
+               <ProjectCard key={item.id} item={item} handleDelete={handleDelete}></ProjectCard>
               </>
             );
           })}
@@ -47,6 +43,7 @@ function ProjectList() {
         </>
       )}
     </div>
+   </div>
   );
 }
 
