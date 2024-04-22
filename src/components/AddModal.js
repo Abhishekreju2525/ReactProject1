@@ -31,7 +31,7 @@ export default function AddModal() {
         onClose={() => setOpenModal(false)}
         className="bg-[#3b3b3b2d]"
       >
-        <Modal.Header>Enter project details</Modal.Header>
+        <Modal.Header className="p-4">Enter project details</Modal.Header>
         <Modal.Body>
           <form
             action=""
@@ -75,6 +75,7 @@ export default function AddModal() {
                   id="startedAt"
                   onChange={handleChange}
                   className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:border-blue-500"
+                  
                   required
                 />
               </div>
