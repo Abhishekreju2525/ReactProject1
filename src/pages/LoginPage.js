@@ -108,7 +108,7 @@ export default function LoginPage() {
                 Not a member? Signup now!
               </Link>
             </div>
-            <div><button onClick={()=>{projectContext.addProject()}}>Add</button></div>
+           
           </div>
         </div>
       </div>
